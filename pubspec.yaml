@@ -1,0 +1,76 @@
+name: machinelearning_app
+description: "CSC4602 Campus Safety Hazard Detection App using YOLOv8 + TFLite."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.7.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # ── Camera ──────────────────────────────────────────────────────────────────
+  # Official Flutter camera plugin — provides live preview + image stream frames
+  camera: ^0.11.0+2
+
+  # ── TFLite inference ────────────────────────────────────────────────────────
+  # tflite_flutter is the canonical Google-maintained Flutter binding to the
+  # TensorFlow Lite C API. It bundles pre-built native libraries for Android
+  # (arm64-v8a, armeabi-v7a) and iOS, so no separate NDK build is needed.
+  # Chosen over the deprecated 'tflite' package and the unmaintained
+  # 'flutter_tflite' fork because it supports raw tensor I/O required for
+  # custom YOLOv8 post-processing.
+  tflite_flutter: ^0.12.1
+
+  # ── Image processing ────────────────────────────────────────────────────────
+  # Pure-Dart image library: used to convert YUV420 camera frames → RGB and
+  # to resize frames to the 640×640 model input size.
+  image: ^4.2.0
+
+  # ── File system ─────────────────────────────────────────────────────────────
+  # Provides platform-appropriate paths for saving captured screenshots.
+  path_provider: ^2.1.4
+
+  # ── Runtime permissions ─────────────────────────────────────────────────────
+  permission_handler: ^11.3.1
+
+  # ── State management ────────────────────────────────────────────────────────
+  # Lightweight Provider for sharing DetectionHistoryService across the widget tree.
+  provider: ^6.1.2
+
+  # ── Date/time formatting ────────────────────────────────────────────────────
+  intl: ^0.20.2
+
+  # ── .env loader for the Gemini API key ──────────────────────────────────────
+  # Reads `.env` from the bundled assets at startup so the key never ends up
+  # in source control. Standard pattern; well-maintained package.
+  flutter_dotenv: ^5.1.0
+
+  # ── Gemini API SDK ──────────────────────────────────────────────────────────
+  # Official Google Dart SDK for the Gemini text generation API. Used by
+  # GeminiService to fetch a short safety recommendation per detected hazard.
+  google_generative_ai: ^0.4.6
+
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    # All 4 YOLO models + 2 meta-classifier models + their config JSON.
+    # The noCompress setting in build.gradle.kts prevents Android from
+    # zipping the .tflite files, which allows TFLite to memory-map them
+    # efficiently.
+    - assets/models/
+
+    # .env is bundled as a Flutter asset so flutter_dotenv can load it via
+    # rootBundle at runtime. The file itself is gitignored — what ends up
+    # in the APK is whatever .env is present on the build machine.
+    - .env

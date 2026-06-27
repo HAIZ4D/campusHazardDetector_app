@@ -1,0 +1,55 @@
+{
+  "specific_classes": [
+    "Broken Fence",
+    "Broken Lamp Post",
+    "Damaged Flooring",
+    "Fallen Branch",
+    "Mossy Surface",
+    "Obstacle Walkway",
+    "Open/Uncovered Drain",
+    "Overflowing Trash Bin",
+    "Overgrown Vegetation",
+    "Pothole",
+    "Protruding Fastener",
+    "Rusted Equipment",
+    "Sharp Object",
+    "Unclear/Broken Signboard",
+    "Uneven Floor",
+    "Waterlogged Field",
+    "Wet Floor"
+  ],
+  "parent_classes": [
+    "Hygiene Hazard",
+    "Obstruction Hazard",
+    "Structural/Injury Hazard",
+    "Surface/Ground Hazard"
+  ],
+  "onehot_categories": [
+    "Broken Fence",
+    "Broken Lamp Post",
+    "Damaged Flooring",
+    "Fallen Branch",
+    "Mossy Surface",
+    "Obstacle Walkway",
+    "Open/Uncovered Drain",
+    "Overflowing Trash Bin",
+    "Overgrown Vegetation",
+    "Pothole",
+    "Protruding Fastener",
+    "Rusted Equipment",
+    "Sharp Object",
+    "Unclear/Broken Signboard",
+    "Uneven Floor",
+    "Waterlogged Field",
+    "Wet Floor"
+  ],
+  "feature_order": [
+    "Haizad_confidence",
+    "Sabrina_confidence",
+    "Hafiy_confidence",
+    "Yasmin_confidence",
+    "num_models_agreeing",
+    "max_confidence",
+    "avg_confidence"
+  ]
+}
