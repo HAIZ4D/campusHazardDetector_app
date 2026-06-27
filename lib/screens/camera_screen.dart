@@ -355,15 +355,16 @@ class _CameraScreenState extends State<CameraScreen>
   }
 
   Widget _buildLoadingScreen() {
+    final goldColor = Theme.of(context).colorScheme.primary;
     return Container(
       color: Colors.black,
       alignment: Alignment.center,
-      child: const Column(
+      child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          CircularProgressIndicator(color: Colors.deepOrange),
-          SizedBox(height: 16),
-          Text(
+          CircularProgressIndicator(color: goldColor),
+          const SizedBox(height: 16),
+          const Text(
             'Initialising camera & models…',
             style: TextStyle(color: Colors.white70),
           ),
@@ -419,6 +420,10 @@ class _ShutterButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Gold shutter inner — matches the app's yellow theme, reads as a
+    // premium camera/safety feel against the dark camera preview.
+    final goldColor = Theme.of(context).colorScheme.primary;
+
     return GestureDetector(
       onTap: isCapturing ? null : onTap,
       child: AnimatedContainer(
@@ -435,6 +440,13 @@ class _ShutterButton extends StatelessWidget {
               blurRadius: 14,
               spreadRadius: 1,
             ),
+            // Subtle gold glow so the shutter feels alive on the dark
+            // camera preview.
+            BoxShadow(
+              color: goldColor.withValues(alpha: 0.30),
+              blurRadius: 18,
+              spreadRadius: 1,
+            ),
           ],
         ),
         child: Center(
@@ -446,7 +458,7 @@ class _ShutterButton extends StatelessWidget {
               shape: BoxShape.circle,
               color: isCapturing
                   ? Colors.white.withValues(alpha: 0.6)
-                  : Colors.deepOrange,
+                  : goldColor,
               boxShadow: const [
                 BoxShadow(
                   color: Color(0x33000000),
@@ -463,7 +475,8 @@ class _ShutterButton extends StatelessWidget {
                       color: Colors.white,
                     ),
                   )
-                : const Icon(Icons.camera_alt, color: Colors.white, size: 28),
+                : const Icon(Icons.camera_alt,
+                    color: Colors.black87, size: 28),
           ),
         ),
       ),

@@ -16,6 +16,7 @@
 import 'package:flutter/material.dart';
 
 import '../ensemble/label_harmoniser.dart';
+import '../widgets/hero_app_bar.dart';
 import '../widgets/parent_category_palette.dart';
 
 /// Hardcoded list of (raw → harmonised) pairs we ALWAYS want shown, derived
@@ -99,8 +100,10 @@ class HazardsScreen extends StatelessWidget {
     }());
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Hazards'),
+      appBar: const HeroAppBar(
+        title: 'Hazards',
+        subtitle: '17 detectable types across 4 risk families',
+        icon: Icons.shield,
       ),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),

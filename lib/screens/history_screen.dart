@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import '../models/detection_record.dart';
 import '../services/detection_history_service.dart';
 import '../widgets/display_rules.dart';
+import '../widgets/hero_app_bar.dart';
 import '../widgets/parent_category_palette.dart';
 import 'detection_detail_screen.dart';
 
@@ -30,17 +31,18 @@ class HistoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('History'),
+      appBar: HeroAppBar(
+        title: 'History',
+        subtitle: 'Captured hazards and AI safety notes',
+        icon: Icons.history,
         actions: [
-          // Clear-all button — only shown when there are records.
           Consumer<DetectionHistoryService>(
             builder: (_, service, __) {
               if (service.count == 0) return const SizedBox.shrink();
-              return IconButton(
-                icon: const Icon(Icons.delete_sweep),
+              return HeroAppBarAction(
+                icon: Icons.delete_sweep,
                 tooltip: 'Clear all records',
-                onPressed: () => _confirmClearAll(context, service),
+                onTap: () => _confirmClearAll(context, service),
               );
             },
           ),

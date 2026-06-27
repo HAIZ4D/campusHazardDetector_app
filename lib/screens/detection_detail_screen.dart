@@ -39,6 +39,7 @@ import '../models/detection_record.dart';
 import '../services/detection_history_service.dart';
 import '../services/gemini_service.dart';
 import '../widgets/display_rules.dart';
+import '../widgets/hero_app_bar.dart';
 import '../widgets/parent_category_palette.dart';
 
 class DetectionDetailScreen extends StatefulWidget {
@@ -84,21 +85,37 @@ class _DetectionDetailScreenState extends State<DetectionDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Detection Detail'),
-      ),
-      // Consumer so we rebuild when updateRecord lands the cached response.
-      body: Consumer<DetectionHistoryService>(
-        builder: (_, service, __) {
-          final record = service.recordById(widget.recordId);
-          if (record == null) {
-            // User deleted the record from another route while we were open.
-            return _buildDeletedState();
-          }
-          return _buildBody(record);
-        },
-      ),
+    // We need the record to colour-match the HeroAppBar accent to the
+    // parent category, so we wrap the WHOLE screen in the Consumer (not
+    // just the body).
+    return Consumer<DetectionHistoryService>(
+      builder: (_, service, __) {
+        final record = service.recordById(widget.recordId);
+
+        // Accent the appbar with the record's parent-category colour so the
+        // detail screen visually echoes the card the user just tapped on.
+        // Falls back to a neutral accent for deleted / no-hazard records.
+        final Color accent = record == null || !record.hasHazard
+            ? Theme.of(context).colorScheme.primary
+            : ParentCategoryPalette.colorFor(record.parentLabel);
+
+        final String subtitle = record == null
+            ? 'Record no longer available'
+            : record.hasHazard
+                ? '${record.specificLabel} · ${record.zone.displayName}'
+                : '${record.zone.displayName} · no hazard';
+
+        return Scaffold(
+          appBar: HeroAppBar(
+            title: 'Detection',
+            subtitle: subtitle,
+            icon: Icons.warning_amber_rounded,
+            accentColor: accent,
+            showBackButton: true,
+          ),
+          body: record == null ? _buildDeletedState() : _buildBody(record),
+        );
+      },
     );
   }
 

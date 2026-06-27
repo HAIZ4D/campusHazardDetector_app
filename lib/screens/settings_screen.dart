@@ -21,6 +21,7 @@ import '../services/app_settings_service.dart';
 import '../services/detection_history_service.dart';
 import '../services/gemini_service.dart';
 import '../widgets/display_rules.dart';
+import '../widgets/hero_app_bar.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -28,7 +29,11 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Settings')),
+      appBar: const HeroAppBar(
+        title: 'Settings',
+        subtitle: 'Tune detection, AI, storage and more',
+        icon: Icons.settings,
+      ),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
         children: const [
